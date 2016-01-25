@@ -3,6 +3,6 @@ ARGF.each_line do |line|
   key, value = line.split(' ')
   word, text = key.split('@')
 
-  puts "#{word}\t#{text}=#{value},1"
-  #=> word  1.txt=1/54,1
+  puts "#{word}\t#{text}=#{value}"
+  #=> word  1.txt=1/54
 end
