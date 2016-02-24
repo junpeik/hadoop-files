@@ -1,12 +1,18 @@
-#initialize value with 0
-counter = Hash.new{|h,k| h[k] = 0 }
+# coding: utf-8
+require 'nokogiri'
+require 'open-uri'
 
-ARGF.each_line do |line|
-  line.chomp!
-  text, num = line.split(/\t/)
-  counter[text] += num.to_i
-end
+#20記事
+URL = 'http://headlines.yahoo.co.jp/rss/all-dom.xml'
+doc = Nokogiri::XML(open(URL))
+item = doc.xpath('//rss/channel/item')
 
-counter.each do |k,v|
-  puts "#{k}\t#{v}/#{counter.size}"
+item.each do |item|
+  title = item.xpath('title').text
+  link = item.xpath('link').text
+  news = Nokogiri::HTML(open(link))
+  text = news.xpath('//*[@class="ynDetailText"]').text
+  puts title
+  puts text
+  puts '-------------------------------------'
 end
